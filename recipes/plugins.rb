@@ -111,3 +111,16 @@ template "#{node[:stackdriver][:plugins][:conf_dir]}memcached.conf" do
   only_if { node[:stackdriver][:plugins][:memcached][:enable] }
   notifies :restart, 'service[stackdriver-agent]', :delayed
 end
+
+# Mysql plugin
+
+template "#{node[:stackdriver][:plugins][:conf_dir]}mysql.conf" do
+  source 'mysql.conf.erb'
+  variables(
+    :database_name => node[:stackdriver][:plugins][:memcached][:database_name],
+    :stats_user => node[:stackdriver][:plugins][:memcached][:stats_user],
+    :stats_password => node[:stackdriver][:plugins][:memcached][:stats_password]
+  )
+  only_if { node[:stackdriver][:plugins][:mysql][:enable] }
+  notifies :restart, 'service[stackdriver-agent]', :delayed
+end
