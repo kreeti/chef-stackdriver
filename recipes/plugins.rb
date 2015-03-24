@@ -117,9 +117,9 @@ end
 template "#{node[:stackdriver][:plugins][:conf_dir]}mysql.conf" do
   source 'mysql.conf.erb'
   variables(
-    :database_name => node[:stackdriver][:plugins][:memcached][:database_name],
-    :stats_user => node[:stackdriver][:plugins][:memcached][:stats_user],
-    :stats_password => node[:stackdriver][:plugins][:memcached][:stats_password]
+    :database_name => node[:stackdriver][:plugins][:mysql][:database_name],
+    :stats_user => node[:stackdriver][:plugins][:mysql][:stats_user],
+    :stats_password => node[:stackdriver][:plugins][:mysql][:stats_password]
   )
   only_if { node[:stackdriver][:plugins][:mysql][:enable] }
   notifies :restart, 'service[stackdriver-agent]', :delayed
